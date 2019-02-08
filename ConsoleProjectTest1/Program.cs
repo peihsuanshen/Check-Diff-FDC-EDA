@@ -26,7 +26,7 @@ namespace ConsoleProjectTest1
             fs.Close();
             return cntxtDic;
         }
-        public void AppendVariable(String filePath, XmlNode element)
+        public void AppendVariable(String filePath, Dictionary<String, XmlElement> addContext)
         {
             //FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
             XmlDocument doc = new XmlDocument();
@@ -36,8 +36,11 @@ namespace ConsoleProjectTest1
             XmlNode lastTypeNode = typeList.Item(typeList.Count-1);
             Console.WriteLine("last child is :{0}", lastTypeNode.FirstChild.InnerText);
 
-            XmlNode importNode = doc.ImportNode(element, true);
-            lastTypeNode.ParentNode.AppendChild(importNode);
+            foreach(XmlNode node in addContext.Values)
+            {
+                XmlNode importNode = doc.ImportNode(node, true);
+                lastTypeNode.ParentNode.AppendChild(importNode);
+            }
             doc.Save(filePath);
             //fs.Close();
         }
@@ -58,22 +61,28 @@ namespace ConsoleProjectTest1
             Console.WriteLine("number of value in EDA:{0}", EDAContext.Count);
 
             Boolean addCntxtFlag = false;
+            Dictionary<String, XmlElement> addContext = new Dictionary<string, XmlElement>();
+
             foreach (String key in EDAContext.Keys)
             {
                 Console.WriteLine("Key in EDA Context: {0}", key);
-                if (!addCntxtFlag)
-                {
-                    File.Copy(filePathFDC, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/AppTest/AppTest_P6/FDCContext.xml.bak." + DateTime.Today.ToString("yyyyMMdd"));
-                    addCntxtFlag = true;
-                    Console.WriteLine("Back up old context.sic");
-                }
+
                 if (!FDCContext.ContainsKey(key))
                 {
+                    if (!addCntxtFlag)
+                    {
+                        File.Copy(filePathFDC, Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/AppTest/AppTest_P6/FDCContext.xml.bak." + DateTime.Today.ToString("yyyyMMdd"));
+                        addCntxtFlag = true;
+                        Console.WriteLine("Back up original contextDictionary.");
+                    }
 
-                    context.AppendVariable(filePathFDC, EDAContext[key]);
+                    Console.WriteLine("Add additional node in FDC contextDictionary: {0}", key);
+                    addContext.Add(key, EDAContext[key]);
+                    //context.AppendVariable(filePathFDC, EDAContext[key]);
                 }
-
             }
+
+            context.AppendVariable(filePathFDC, addContext);
         }
     }
 }
