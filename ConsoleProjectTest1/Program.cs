@@ -47,7 +47,6 @@ namespace ConsoleProjectTest1
     {
         public static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
             ParseContextDic context = new ParseContextDic();
             //read.GetFile();
             String filePathFDC = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/AppTest/AppTest_P6/FDCContext.xml";
