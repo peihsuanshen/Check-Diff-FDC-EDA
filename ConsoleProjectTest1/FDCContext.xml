@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Context>
+    <info>
+        <name>ContextDictionary.sic</name>
+    </info>
+    <variable>
+        <type>
+            <name>
+                moduleID
+            </name>
+            <value>
+                <chamberID>
+                    A
+                </chamberID>
+                <chamberID>
+                    B
+                </chamberID>
+            </value>
+        </type>
+        <type>
+            <name>
+                recipeID
+            </name>
+            <value>
+                <chamberID>
+                    recipeID
+                </chamberID>
+            </value>
+        </type>
+    </variable>
+</Context>
