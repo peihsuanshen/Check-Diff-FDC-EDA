@@ -48,7 +48,6 @@ namespace ConsoleProjectTest1
         public static void Main(string[] args)
         {
             ParseContextDic context = new ParseContextDic();
-            //read.GetFile();
             String filePathFDC = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "/AppTest/AppTest_P6/FDCContext.xml";
             Dictionary<String, XmlElement> FDCContext = context.ReadContent3(filePathFDC);
 
